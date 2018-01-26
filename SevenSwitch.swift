@@ -25,9 +25,14 @@
 import UIKit
 import QuartzCore
 
+public protocol SevenSwitchDelegate: class {
+    func onStateChanged(_ value: Bool)
+}
+
 @IBDesignable @objc open class SevenSwitch: UIControl {
     
     // public
+    public weak var delegate: SevenSwitchDelegate?
     
     /*
     *   Set (without animation) whether the switch is on or off
@@ -357,6 +362,7 @@ import QuartzCore
         if previousValue != self.on {
             self.sendActions(for: UIControlEvents.valueChanged)
         }
+        delegate?.onStateChanged(switchValue)
     }
     
     override open func cancelTracking(with event: UIEvent?) {
